@@ -40,8 +40,6 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-
-
 # Misc
 .DS_Store
 Thumbs.db
