@@ -1,0 +1,23 @@
+{
+  "name": "meeting-application",
+  "version": "1.0.0",
+  "description": "This is a meeting application project inspired by google meet, zoom and various plateforms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon index.js"
+  },
+  "author": "Saurabh Jaiswal",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
+    "peer": "^1.0.2",
+    "socket.io": "^4.7.5"
+  }
+}

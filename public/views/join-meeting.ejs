@@ -1,0 +1,489 @@
+<%- include('common/head.ejs') %>
+    <%- include('common/navbar.ejs') %>
+
+
+
+
+        <div class="video-container bg-gray-900 h-screen -mt-24 flex items-center p-24">
+
+            <div>
+                <video height="200px" autoplay muted class="h-64 m-5 local-video border-gray-600 rounded-xl border-4"
+                    id="local-video"></video>
+            </div>
+            <div style="border: 1px solid whitesmoke;" class="h-64 mx-6"></div>
+
+            <div id="notPinned" class="flex justify-center h-128 scrolling-auto" style="width: 60%; flex-wrap: wrap;">
+                <div id="noOneHere" class="flex flex-col">
+                    <p class="text-gray-400 text-lg">No one is here...</p>
+                    <br>
+                    <button id="joinButton"
+                        class="text-white bg-green-700 hover:bg-green-800  font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Join Now</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="call-container">
+            <p id="callerId"></p>
+        </div>
+
+
+
+
+        <section class="bg-gray-900">
+            <div
+                class="fixed bottom-0 left-0 z-50 grid w-full h-16 grid-cols-1 px-8 bg-gray-900 border-t border-gray-200 md:grid-cols-3 dark:bg-gray-700 dark:border-gray-600">
+                <div class="items-center justify-center hidden text-gray-500 dark:text-gray-400 me-auto md:flex">
+                    <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+                    </svg>
+                    <span class="text-sm text-gray-400" id="currentTime">12:43 PM</span>
+                    <span class="text-sm border-gray-600 text-gray-400 border-l ml-4 pl-4 tracking-wide">
+                        <%= meetingId %>
+                    </span>
+                    <span id="active-members"
+                        class="text-sm border-gray-600 text-gray-400 border-l ml-4 pl-4 tracking-wide">
+                        In-Meeting :
+                    </span>
+                </div>
+                <div class="flex items-center justify-center mx-auto">
+                    <button id="turnOffAudio" data-tooltip-target="tooltip-microphone" type="button"
+                        class="p-2.5 group rounded-full bg-gray-100 hover:bg-gray-200 me-4 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:bg-gray-600 dark:hover:bg-gray-800">
+                        <svg id="mute" height="16px" class="hidden" width="16px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M8.46233 13.8534C8.13618 13.5981 7.66478 13.6555 7.40945 13.9817C7.15411 14.3078 7.21152 14.7792 7.53767 15.0346L8.46233 13.8534ZM17.4623 15.0346C17.7885 14.7792 17.8459 14.3078 17.5906 13.9817C17.3352 13.6555 16.8638 13.5981 16.5377 13.8534L17.4623 15.0346ZM13.25 16C13.25 15.5858 12.9142 15.25 12.5 15.25C12.0858 15.25 11.75 15.5858 11.75 16H13.25ZM11.75 19C11.75 19.4142 12.0858 19.75 12.5 19.75C12.9142 19.75 13.25 19.4142 13.25 19H11.75ZM19.5303 5.53033C19.8232 5.23744 19.8232 4.76256 19.5303 4.46967C19.2374 4.17678 18.7626 4.17678 18.4697 4.46967L19.5303 5.53033ZM10.4897 12.4497C10.1968 12.7426 10.1968 13.2174 10.4897 13.5103C10.7826 13.8032 11.2574 13.8032 11.5503 13.5103L10.4897 12.4497ZM4.46967 18.4697C4.17678 18.7626 4.17678 19.2374 4.46967 19.5303C4.76256 19.8232 5.23744 19.8232 5.53033 19.5303L4.46967 18.4697ZM11.5503 13.5103C11.8432 13.2174 11.8432 12.7426 11.5503 12.4497C11.2574 12.1568 10.7826 12.1568 10.4897 12.4497L11.5503 13.5103ZM11.526 12.4264C11.2202 12.1469 10.7458 12.1683 10.4664 12.474C10.1869 12.7798 10.2083 13.2542 10.514 13.5336L11.526 12.4264ZM12.5 13.556L12.4986 14.306C12.5037 14.306 12.5088 14.306 12.5139 14.3059L12.5 13.556ZM14.75 11.222H13.9999L14.0001 11.2355L14.75 11.222ZM15.5 9.25C15.5 8.83579 15.1642 8.5 14.75 8.5C14.3358 8.5 14 8.83579 14 9.25H15.5ZM9.5 10.274C9.5 10.6882 9.83579 11.024 10.25 11.024C10.6642 11.024 11 10.6882 11 10.274H9.5ZM10.25 7.334L11.0001 7.334L10.9999 7.32046L10.25 7.334ZM12.5 5L12.5057 4.25002C12.4991 4.24997 12.4926 4.25001 12.4861 4.25013L12.5 5ZM13.8253 6.59048C14.0061 6.96312 14.4548 7.11859 14.8275 6.93773C15.2001 6.75687 15.3556 6.30817 15.1747 5.93552L13.8253 6.59048ZM7.53767 15.0346C10.4524 17.3164 14.5476 17.3164 17.4623 15.0346L16.5377 13.8534C14.1661 15.7101 10.8339 15.7101 8.46233 13.8534L7.53767 15.0346ZM11.75 16V19H13.25V16H11.75ZM18.4697 4.46967L10.4897 12.4497L11.5503 13.5103L19.5303 5.53033L18.4697 4.46967ZM5.53033 19.5303L11.5503 13.5103L10.4897 12.4497L4.46967 18.4697L5.53033 19.5303ZM10.514 13.5336C11.0563 14.0292 11.764 14.3046 12.4986 14.306L12.5014 12.806C12.1403 12.8053 11.7925 12.67 11.526 12.4264L10.514 13.5336ZM12.5139 14.3059C14.1936 14.2746 15.5302 12.8882 15.4999 11.2085L14.0001 11.2355C14.0155 12.0873 13.3378 12.7903 12.4861 12.8061L12.5139 14.3059ZM15.5 11.222L15.5 9.25H14V11.222H15.5ZM11 10.274V7.334H9.5V10.274H11ZM10.9999 7.32046C10.9845 6.46875 11.6622 5.76571 12.5139 5.74987L12.4861 4.25013C10.8064 4.28136 9.46979 5.66785 9.50012 7.34754L10.9999 7.32046ZM12.4943 5.74998C13.0617 5.75428 13.5775 6.08003 13.8253 6.59048L15.1747 5.93552C14.6779 4.91189 13.6435 4.25864 12.5057 4.25002L12.4943 5.74998Z"
+                                    fill="#fff"></path>
+                            </g>
+                        </svg>
+                        <svg id="unmute" width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M14.75 7.33303V11.222C14.7728 12.4877 13.7657 13.5325 12.5 13.556C11.2343 13.5325 10.2271 12.4877 10.25 11.222V7.33303C10.2277 6.06772 11.2347 5.02357 12.5 5.00003C13.7653 5.02357 14.7723 6.06772 14.75 7.33303Z"
+                                    stroke="#616161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                                <path
+                                    d="M8.46233 13.8534C8.13618 13.5981 7.66478 13.6555 7.40945 13.9817C7.15411 14.3078 7.21152 14.7792 7.53767 15.0346L8.46233 13.8534ZM17.4623 15.0346C17.7885 14.7792 17.8459 14.3078 17.5906 13.9817C17.3352 13.6555 16.8638 13.5981 16.5377 13.8534L17.4623 15.0346ZM13.25 16C13.25 15.5858 12.9142 15.25 12.5 15.25C12.0858 15.25 11.75 15.5858 11.75 16H13.25ZM11.75 19C11.75 19.4142 12.0858 19.75 12.5 19.75C12.9142 19.75 13.25 19.4142 13.25 19H11.75ZM7.53767 15.0346C10.4524 17.3164 14.5476 17.3164 17.4623 15.0346L16.5377 13.8534C14.1661 15.7101 10.8339 15.7101 8.46233 13.8534L7.53767 15.0346ZM11.75 16V19H13.25V16H11.75Z"
+                                    fill="#616161"></path>
+                            </g>
+                        </svg>
+                        <span class="sr-only">Mute microphone</span>
+                    </button>
+                    <div id="tooltip-microphone" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Mute microphone
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button id="turnOffVideo" data-tooltip-target="tooltip-camera" type="button"
+                        class="p-2.5 bg-gray-100 group rounded-full hover:bg-gray-200 me-4 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:bg-gray-600 dark:hover:bg-gray-800">
+                        <svg id="onCamera" width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" stroke="#616161">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M3 3L6.00007 6.00007M21 21L19.8455 19.8221M9.74194 4.06811C9.83646 4.04279 9.93334 4.02428 10.0319 4.01299C10.1453 4 10.2683 4 10.5141 4H13.5327C13.7786 4 13.9015 4 14.015 4.01299C14.6068 4.08078 15.1375 4.40882 15.4628 4.90782C15.5252 5.00345 15.5802 5.11345 15.6901 5.33333C15.7451 5.44329 15.7726 5.49827 15.8037 5.54609C15.9664 5.79559 16.2318 5.95961 16.5277 5.9935C16.5844 6 16.6459 6 16.7688 6H17.8234C18.9435 6 19.5036 6 19.9314 6.21799C20.3077 6.40973 20.6137 6.71569 20.8055 7.09202C21.0234 7.51984 21.0234 8.0799 21.0234 9.2V15.3496M19.8455 19.8221C19.4278 20 18.8702 20 17.8234 20H6.22344C5.10333 20 4.54328 20 4.11546 19.782C3.73913 19.5903 3.43317 19.2843 3.24142 18.908C3.02344 18.4802 3.02344 17.9201 3.02344 16.8V9.2C3.02344 8.0799 3.02344 7.51984 3.24142 7.09202C3.43317 6.71569 3.73913 6.40973 4.11546 6.21799C4.51385 6.015 5.0269 6.00103 6.00007 6.00007M19.8455 19.8221L14.5619 14.5619M14.5619 14.5619C14.0349 15.4243 13.0847 16 12 16C10.3431 16 9 14.6569 9 13C9 11.9153 9.57566 10.9651 10.4381 10.4381M14.5619 14.5619L10.4381 10.4381M10.4381 10.4381L6.00007 6.00007"
+                                    stroke="#616161" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                            </g>
+                        </svg>
+                        <svg id="offCamera" class="hidden" width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" stroke="#616161">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10C10.3431 10 9 11.3431 9 13C9 14.6569 10.3431 16 12 16Z"
+                                    stroke="#616161" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                                <path
+                                    d="M3 16.8V9.2C3 8.0799 3 7.51984 3.21799 7.09202C3.40973 6.71569 3.71569 6.40973 4.09202 6.21799C4.51984 6 5.0799 6 6.2 6H7.25464C7.37758 6 7.43905 6 7.49576 5.9935C7.79166 5.95961 8.05705 5.79559 8.21969 5.54609C8.25086 5.49827 8.27836 5.44328 8.33333 5.33333C8.44329 5.11342 8.49827 5.00346 8.56062 4.90782C8.8859 4.40882 9.41668 4.08078 10.0085 4.01299C10.1219 4 10.2448 4 10.4907 4H13.5093C13.7552 4 13.8781 4 13.9915 4.01299C14.5833 4.08078 15.1141 4.40882 15.4394 4.90782C15.5017 5.00345 15.5567 5.11345 15.6667 5.33333C15.7216 5.44329 15.7491 5.49827 15.7803 5.54609C15.943 5.79559 16.2083 5.95961 16.5042 5.9935C16.561 6 16.6224 6 16.7454 6H17.8C18.9201 6 19.4802 6 19.908 6.21799C20.2843 6.40973 20.5903 6.71569 20.782 7.09202C21 7.51984 21 8.0799 21 9.2V16.8C21 17.9201 21 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 18.4802 3 17.9201 3 16.8Z"
+                                    stroke="#616161" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                            </g>
+                        </svg>
+                        <span class="sr-only">Hide camera</span>
+                    </button>
+                    <div id="tooltip-camera" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Hide camera
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button data-tooltip-target="tooltip-feedback" type="button"
+                        class="p-2.5 bg-gray-100 group rounded-full hover:bg-gray-200 me-4 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:bg-gray-600 dark:hover:bg-gray-800">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM13.5 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm3.5 9.5A5.5 5.5 0 0 1 4.6 11h10.81A5.5 5.5 0 0 1 10 15.5Z" />
+                        </svg>
+                        <span class="sr-only">Share feedback</span>
+                    </button>
+                    <div id="tooltip-feedback" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Share feedback
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button data-tooltip-target="tooltip-settings" type="button"
+                        class="p-2.5 bg-gray-100 group rounded-full me-4 md:me-0 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:bg-gray-600 dark:hover:bg-gray-800">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2" />
+                        </svg>
+                        <span class="sr-only">Video settings</span>
+                    </button>
+                    <button id="shareScreen" data-tooltip-target="tooltip-settings" type="button"
+                        class="ml-4 mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        style="width: 100px; height: 40px;">Present</button>
+                    <a href="/home">
+                    <button id="leave-meeting" data-tooltip-target="tooltip-settings" type="button"
+                        class="ml-4 mt-2 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        style="width: 100px; height: 40px;">Leave</button>
+                    </a>
+
+                    <div id="tooltip-settings" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Video settings
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+
+                </div>
+                <div class="items-center justify-center hidden ms-auto md:flex">
+                    <button data-tooltip-target="tooltip-participants" type="button"
+                        class="p-2.5 group rounded-full hover:bg-gray-100 me-1 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-600 dark:hover:bg-gray-600">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 18">
+                            <path
+                                d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+                        </svg>
+                        <span class="sr-only">Show participants</span>
+                    </button>
+                    <div id="tooltip-participants" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Show participants
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button data-tooltip-target="tooltip-volume" type="button"
+                        class="p-2.5 group rounded-full hover:bg-gray-100 me-1 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-600 dark:hover:bg-gray-600">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 18">
+                            <path
+                                d="M10.836.357a1.978 1.978 0 0 0-2.138.3L3.63 5H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h1.63l5.07 4.344a1.985 1.985 0 0 0 2.142.299A1.98 1.98 0 0 0 12 15.826V2.174A1.98 1.98 0 0 0 10.836.357Zm2.728 4.695a1.001 1.001 0 0 0-.29 1.385 4.887 4.887 0 0 1 0 5.126 1 1 0 0 0 1.674 1.095A6.645 6.645 0 0 0 16 9a6.65 6.65 0 0 0-1.052-3.658 1 1 0 0 0-1.384-.29Zm4.441-2.904a1 1 0 0 0-1.664 1.11A10.429 10.429 0 0 1 18 9a10.465 10.465 0 0 1-1.614 5.675 1 1 0 1 0 1.674 1.095A12.325 12.325 0 0 0 20 9a12.457 12.457 0 0 0-1.995-6.852Z" />
+                        </svg>
+                        <span class="sr-only">Adjust volume</span>
+                    </button>
+                    <div id="tooltip-volume" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Adjust volume
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <button data-tooltip-target="tooltip-information" type="button"
+                        class="p-2.5 group rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-600 dark:hover:bg-gray-600">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Show information</span>
+                    </button>
+                    <div id="tooltip-information" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Show information
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+
+
+        <script>
+
+            let meetingId = "<%= meetingId %>";
+            let userId = "<%= userId %>"
+
+            let localStreams;
+            navigator.getUserMedia(
+                { video: true, audio: true },
+                (videoStream) => {
+                    localStreams = new MediaStream();
+
+                    localStreams.addTrack(videoStream.getTracks()[0])
+                    localStreams.addTrack(videoStream.getTracks()[1])
+
+                    window.localStream = localStreams;
+
+                    const localVideo = document.getElementById("local-video");
+                    if (localVideo) {
+                        localVideo.srcObject = localStreams;
+                    }
+
+                    let turnOffAudio = document.getElementById("turnOffAudio");
+                    let turnOffVideo = document.getElementById("turnOffVideo");
+                    let audioTrack = localStreams.getAudioTracks()[0];
+                    let videoTrack = localStreams.getVideoTracks()[0];
+
+
+                    turnOffAudio.addEventListener("click", () => {
+                        if (audioTrack.enabled == true) {
+                            audioTrack.enabled = false;
+                            document.getElementById("mute").style.display = "block"
+                            document.getElementById("unmute").style.display = "none"
+                            turnOffAudio.style.backgroundColor = "red"
+                        } else {
+                            audioTrack.enabled = true;
+                            document.getElementById("mute").style.display = "none"
+                            document.getElementById("unmute").style.display = "block"
+                            turnOffAudio.style.backgroundColor = "#f3f4f6"
+                        }
+
+                    })
+
+                    turnOffVideo.addEventListener("click", () => {
+                        if (videoTrack.enabled == true) {
+                            videoTrack.enabled = false;
+                            document.getElementById("onCamera").style.display = "block"
+                            document.getElementById("offCamera").style.display = "none"
+                            turnOffVideo.style.backgroundColor = "red"
+                        } else {
+                            videoTrack.enabled = true;
+                            document.getElementById("onCamera").style.display = "none"
+                            document.getElementById("offCamera").style.display = "block"
+                            turnOffVideo.style.backgroundColor = "#f3f4f6"
+                        }
+
+                    })
+                })
+                ,
+                (error) => {
+                    console.warn(error.message);
+                }
+
+
+            function getCurrentTime() {
+                document.getElementById("currentTime").innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            }
+
+            getCurrentTime()
+
+            setInterval(() => {
+                let noOneHere = document.getElementById("noOneHere");
+                let notPinnedElements = document.querySelectorAll("#notPinned video")
+                if (notPinnedElements.length >= 1) {
+                    noOneHere.style.display = "none"
+                } else {
+                    noOneHere.style.display = "block"
+                }
+                getCurrentTime()
+            }, 600)
+
+
+
+            let screeShareButton = document.getElementById("shareScreen");
+            let flag = true;
+            let call;
+            let screenStream;
+
+            screeShareButton.addEventListener("click", async () => {
+                let activeMembers = await getActiveMembers(meetingId);
+                if (activeMembers.includes(userId) == false) {
+                    alert("First join the meeting");
+                    return;
+                }
+
+                if (flag) {
+                    navigator.mediaDevices.getDisplayMedia({ video: true }).then((stream) => {
+                        screeShareButton.innerText = "Stop";
+                        flag = !flag;
+                        screenStream = stream;
+                        call = peer.call(meetingId, stream, {
+                            metadata: {
+                                name: name,
+                                socketId: socket.id,
+                                isScreenSharing: true
+                            }
+                        });
+                        socket.emit("screen-share", { name: "<%= name %>", memberId: "<%= userId %>" })
+                    }).catch((err) => {
+                        alert("Screen sharing permission denied")
+                    })
+
+                } else {
+                    screeShareButton.innerText = "Present"
+                    flag = !flag;
+                    call.close();
+
+                    screenStream.getTracks().forEach(track => track.stop());
+
+                    socket.emit("screen-sharing-stopped", { name: "<%= name %>", memberId: "<%= userId %>" })
+                }
+            })
+
+
+            /*
+            // When using ngrok
+            let peer = new Peer(userId, {
+                host: location.hostname,
+                path: "/peerjs"
+            });
+            */
+
+
+
+            // When using localhost
+            let peer = new Peer(userId, {
+                host: location.hostname,
+                port: 9000,
+                path: "/peerjs"
+            });
+
+
+            peer.on("open", () => {
+                console.log("Your device ID is: " + peer.id)
+            })
+
+            peer.on("close", () => {
+                console.log("Call hung up.")
+            })
+
+
+            peer.on('error', (err) => {
+                console.error('Error closing connection:', err);
+            });
+
+
+
+            let _call;
+
+            function call_to_a_person(meetingId, name, isScreenSharing) {
+
+
+                let joinButton = document.getElementById("joinButton");
+                joinButton.addEventListener("click", () => {
+                    const call = peer.call(meetingId, window.localStream, {
+                        metadata: {
+                            name: name,
+                            socketId: socket.id,
+                            isScreenSharing: isScreenSharing
+                        }
+                    });
+
+                    _call = call;
+
+
+                    let vidElement = document.createElement("video");
+                    let remoteVideoContainer = document.getElementById("notPinned");
+                    vidElement.id = call.peer;
+                    vidElement.className = "h-64 m-5 local-video border-gray-600 rounded-xl border-4"
+
+
+                    call.on("stream", (stream) => {
+                        vidElement.srcObject = stream;
+                        vidElement.autoplay = true;
+                        vidElement.peerStream = stream;
+                    })
+
+                    call.on("close", () => {
+                        console.log("Meeting left")
+                    })
+
+
+                    if (document.getElementById(call.peer) == null) {
+                        remoteVideoContainer.appendChild(vidElement);
+                    }
+
+                });
+            }
+
+            // Call to the host
+            call_to_a_person(meetingId, "<%= name %>", false);
+
+
+            socket.on("call-denied", (message) => {
+                alert(message)
+            })
+
+
+            socket.on("new-member-joined", async (data) => {
+                updateAciveMembers();
+                alert(data.name + " joined the meeting..")
+            })
+
+
+
+            socket.on("screen-share", (data) => {
+                console.log(data.name + " started sharing screen..")
+            })
+
+            socket.on("screen-sharing-stopped", (data) => {
+                console.log(data.name + " has stopped sharing his screen..")
+            })
+
+            socket.on("leave-meeting", async (data) => {
+                updateAciveMembers();
+                console.log(data.name + " left the meeting..")
+            })
+
+
+
+            let leaveMeeting = document.getElementById("leave-meeting");
+            leaveMeeting.addEventListener("click", async () => {
+                if (_call) {
+                    let are_you_sure = confirm("Do you really want to leave the meeting ?")
+                    if (are_you_sure) {
+                        let peerId = _call.peer;
+                        let vidElement = document.getElementById(peerId);
+                        vidElement.remove();
+                        _call.close();
+
+                        let result = await removeActiveMemberInDb(meetingId, userId);
+                        if (result.isOk) {
+                            updateAciveMembers();
+                            socket.emit("leave-meeting", { name: "<%= name %>", memberId: userId })
+                        }
+                    }
+                } else {
+                    console.log("First join the meeting")
+                }
+            })
+
+
+
+            let getActiveMembers = () => {
+                return fetch("/get-active-members/?meetingId=" + meetingId).then((res) => res.json()).then((result) => {
+                    return result.activeMembers;
+                })
+            }
+
+            function removeActiveMemberInDb(meetingId, memberId) {
+                return fetch("/remove-active-member-from-db?meetingId=" + meetingId + "&memberId=" + memberId)
+                    .then((res) => res.json())
+                    .then((result => result))
+            }
+
+            async function updateAciveMembers() {
+                let activeMembersElement = document.getElementById("active-members");
+                let activeMembers = await getActiveMembers();
+                activeMembersElement.innerText = "In Meeting : " + activeMembers.length;
+            }
+            updateAciveMembers();
+
+
+
+        </script>
